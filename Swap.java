@@ -1,0 +1,16 @@
+package DSA.Array_DSA;
+
+import java.util.Arrays;
+
+public class Swap {
+    public static void main(String[] args) {
+        int [] arr = {1,2,3,4,5,6,7,8};
+        change(arr, 0, 7);
+        System.out.println(Arrays.toString(arr));
+    }
+    static void change(int [] arr , int index1 , int index2){
+        int temp = arr[index1];
+        arr[index1] = arr [index2];
+        arr[index2] = temp;
+    }
+}
