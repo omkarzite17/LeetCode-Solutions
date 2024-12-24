@@ -1,0 +1,48 @@
+public class Solution {
+    public int splitArray(int[] nums, int m) {
+        int start = 0, end = 0;
+
+        // Initialize binary search bounds
+        for (int i = 0; i < nums.length; i++) {
+            start = Math.max(start, nums[i]);  // The largest element in the array
+            end += nums[i];  // Sum of all elements in the array
+        }
+
+        // Perform binary search
+        while (start < end) {
+            int mid = start + (end - start) / 2;  // Candidate for the largest subarray sum
+
+            // Check if we can split with current mid as the largest sum
+            if (canSplit(nums, m, mid)) {
+                end = mid;  // Try for a smaller maximum sum
+            } else {
+                start = mid + 1;  // Increase the max sum
+            }
+        }
+
+        // Return the smallest possible largest sum
+        return start;
+    }
+
+    // Helper function to check if we can split the array into m subarrays with max sum <= target
+    private boolean canSplit(int[] nums, int m, int target) {
+        int count = 1;  // We start with one subarray
+        int currentSum = 0;
+
+        // Try to form subarrays
+        for (int i = 0; i < nums.length; i++) {
+            currentSum += nums[i];
+            if (currentSum > target) {
+                // Start a new subarray if the current sum exceeds the target
+                count++;
+                currentSum = nums[i];  // This number starts the new subarray
+                if (count > m) {  // If we exceed m subarrays, return false
+                    return false;
+                }
+            }
+        }
+
+        // If we can form m or fewer subarrays, return true
+        return true;
+    }
+}
